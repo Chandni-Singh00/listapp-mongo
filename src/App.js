@@ -10,7 +10,7 @@ function App() {
     useEffect(() => {
         const fetchMovie = async () => {
             try {
-                const response = await axios.get('http://listapp-mongo-server.vercel.app/movies');
+                const response = await axios.get('https://listapp-mongo-server.vercel.app/movies');
                 setMovie(response.data);
             } catch (err) {
                 console.error('Error fetching movie:', err);
