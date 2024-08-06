@@ -1,25 +1,42 @@
 import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [movie, setMovie] = useState(null);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchMovie = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/movies');
+                setMovie(response.data);
+            } catch (err) {
+                console.error('Error fetching movie:', err);
+                setError('Failed to fetch movie data.');
+            }
+        };
+
+        fetchMovie();
+    }, []);
+
+    if (error) {
+        return <p>{error}</p>; // Display an error message if there's an issue fetching the movie data
+    }
+
+    if (!movie) {
+        return <p>Loading...</p>; // Display a loading message until movie data is available
+    }
+
+    return (
+        <div>
+            <h1>{movie.title}</h1>
+            <p>{movie.plot}</p>
+            <p>Year: {movie.year}</p>
+            {/* Add more movie details here */}
+        </div>
+    );
 }
 
 export default App;
