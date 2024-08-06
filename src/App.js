@@ -6,7 +6,7 @@ import './App.css';
 function App() {
     const [movie, setMovie] = useState(null);
     const [error, setError] = useState(null);
-
+    axios.defaults.withCredentials=true;
     useEffect(() => {
         const fetchMovie = async () => {
             try {
